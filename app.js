@@ -18,8 +18,7 @@ const previewBtn = document.getElementById('previewBtn');
 const resultPanel = document.getElementById('resultPanel');
 const pdfPreview = document.getElementById('pdfPreview');
 const downloadLink = document.getElementById('downloadLink');
-const numeroGiorni = document.getElementById('numeroGiorni');
-const numeroGiorniValue = document.getElementById('numeroGiorniValue');
+const dayButtons = document.querySelectorAll('[data-day-button]');
 
 async function loadConfig() {
   const res = await fetch('template.json');
@@ -229,9 +228,10 @@ function syncDay2Dates() {
 function updateDayVisibility() {
   const dayCount = getDayCount();
   const day2Section = document.querySelector('[data-day-section="2"]');
-  const label = dayCount === 2 ? '2 giorni' : '1 giorno';
-  if (numeroGiorniValue) numeroGiorniValue.textContent = label;
-  if (numeroGiorni) numeroGiorni.setAttribute('aria-valuetext', label);
+  dayButtons.forEach((button) => {
+    const isActive = Number(button.dataset.dayButton) === dayCount;
+    button.classList.toggle('active', isActive);
+  });
   if (day2Section) day2Section.hidden = dayCount !== 2;
   if (dayCount === 2) syncDay2Dates();
 }
@@ -253,8 +253,13 @@ previewBtn.addEventListener('click', async () => {
   }
 });
 
-numeroGiorni.addEventListener('input', updateDayVisibility);
-numeroGiorni.addEventListener('change', updateDayVisibility);
+dayButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    const input = button.querySelector('input[type="radio"]');
+    if (input) input.checked = true;
+    updateDayVisibility();
+  });
+});
 document.getElementById('data1_d1').addEventListener('change', () => {
   if (getDayCount() === 2) syncDay2Dates();
 });
