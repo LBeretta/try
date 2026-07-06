@@ -33,16 +33,16 @@
 
       <form id="pdfForm" class="form-grid">
         <div class="field full-width day-choice">
-          <div class="choice-header">
-            <label for="numeroGiorni">Durata evento</label>
-            <span id="numeroGiorniValue" class="choice-value">1 giorno</span>
-          </div>
-          <div class="day-slider-wrap">
-            <input id="numeroGiorni" name="numeroGiorni" type="range" min="1" max="2" step="1" value="1" aria-valuetext="1 giorno" />
-            <div class="slider-labels" aria-hidden="true">
+          <label>Durata evento</label>
+          <div class="day-button-group" role="radiogroup" aria-label="Durata evento">
+            <label class="day-button active" data-day-button="1">
+              <input type="radio" name="numeroGiorni" value="1" checked />
               <span>1 giorno</span>
+            </label>
+            <label class="day-button" data-day-button="2">
+              <input type="radio" name="numeroGiorni" value="2" />
               <span>2 giorni</span>
-            </div>
+            </label>
           </div>
         </div>
 
